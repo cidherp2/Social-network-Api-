@@ -38,11 +38,12 @@ module.exports = {
 
     async editThought (req, res) {
         try {
-            const thoughts = Thought.findByIdAndUpdate(req.params.thoughtId,req.body)
+            const thoughts = await Thought.findByIdAndUpdate(req.params.thoughtId,{toughtText:req.body.toughtText},{new:true})
             if (!thoughts){
                 res.json({message: "Thought does not exist"})
             }
-            res.send(thoughts).json({message:"Thought updated succesfully"})
+            console.log("Thought updated succesfully")
+            res.send(thoughts)
         } catch(err){
             res.send ("Error while updating thought " + err)
         }
@@ -54,21 +55,23 @@ module.exports = {
             if(!thoughts){
                 return res.json({message: "The thought you are trying to delete does not exist"})
             }
-            res.send(user).json({message: "User thought deleted successfully"})
+            res.send({message: "Thought deleted succesfully"})
         } catch (err) {
+            console.log(err);
             res.send("impossible to delete thought, error: " + err)
         }
     },
 
-    async react (req, res) {
+    async createReaction (req, res) {
         try {
             if (!req.body.username) {
                 res.send({message: "Couldn't find the username"})
             }
-            const reaction = await Thought.findByIdAndUpdate(req.params.thoughtId,{
-                $push:{reactions:req.body}
-            });
-            res.send({message:"Reacted to user thought"})
+            const thoughts = await Thought.findByIdAndUpdate(req.params.thoughtId,{
+                $push:{reaction:req.body}},{new:true}
+            );
+            console.log("Reacted to user thought")
+            res.send(thoughts)
         } catch (err) {
             res.send("Error trying to add readction to the thought: Error " + err);
             
@@ -77,8 +80,9 @@ module.exports = {
 
     async deletReaction (req ,res) {
         try {
-            const thoughts = await Thought.findByIdAndUpdate(req.params.thoughtId,{$pull:{"reactions":{_id: req.params.reactionId}}})
-            res.send({message:"Reaction removed"})
+            const thoughts = await Thought.findByIdAndUpdate(req.params.thoughtId,{$pull:{"reaction":{reactionId:req.params.reactionId}}},{new:true});
+            console.log("Reaction removed")
+            res.send(thoughts);
         } catch (err){
             res.send({message: "An error ocurred while deleting the reaction " + err})
 
