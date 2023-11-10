@@ -1,7 +1,7 @@
 const {Schema,model } = require('mongoose');
 
 let emailValidator = (mail) => {
-    let validator = /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/;
+    var validator = /^([a-zA-Z0-9_\.-]+)@([a-zA-Z\d\.-]+)\.([a-zA-Z]{2,})$/;
     return validator.test(mail);
 }
 
@@ -12,13 +12,14 @@ const userSchema = new Schema (
             unique: true,
             required: true,
             trim: true,
-            validate: [emailValidator, 'Please enter a valid email']
+           
         }, 
         email:{
             type: String,
             lowercase: true,
             unique: true,
             required: true,
+            validate: [emailValidator, 'Please enter a valid email']
         },
         thoughts:[
             {
