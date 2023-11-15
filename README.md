@@ -26,6 +26,9 @@ run npm i to install dependencies and npm start to run it
 you need to use postamn and use the correct routes and parameters
 ## License
 
+## Video
+Check out the application in action [click-here](https://drive.google.com/file/d/12dcS7PFu3RRLAw8x71FGQbeGlB_ebudr/viewLinks)
+
 ## Contribution
 there are none
 ## Tests
