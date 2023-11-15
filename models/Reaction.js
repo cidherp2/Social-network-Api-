@@ -11,10 +11,10 @@ const dateFormat = (date) => {
 
   const reactionSchema = new Schema (
     {
-        // reactionId:{
-        //     type: Schema.ObjectId,
-        //     default: () => new Types.ObjectId(),
-        // },
+        reactionId:{
+            type: Schema.ObjectId,
+            default: () => new Types.ObjectId(),
+        },
 
         reactionBody:{
             type: String,
